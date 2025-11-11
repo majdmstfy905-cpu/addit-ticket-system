@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تسجيل الدخول - Addit</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .login-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 450px;
+        width: 100%;
+        padding: 40px;
+      }
+      .logo {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .logo h1 {
+        font-size: 2.5em;
+        color: #667eea;
+        margin-bottom: 10px;
+      }
+      .logo p {
+        color: #666;
+      }
+      .form-group {
+        margin-bottom: 25px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: bold;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+      .form-group input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+      .btn-login {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      }
+      .demo-accounts {
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 2px solid #f0f0f0;
+      }
+      .demo-accounts h3 {
+        color: #333;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      .account-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        background: #f8f9fa;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s;
+      }
+      .account-btn:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+      }
+      .back-link {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .back-link a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .back-link a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="logo">
+        <h1>🎫 Addit</h1>
+        <p>تسجيل الدخول إلى النظام</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label>اسم المستخدم</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="أدخل اسم المستخدم"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>كلمة المرور</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="أدخل كلمة المرور"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-login">تسجيل الدخول</button>
+      </form>
+
+      <div class="demo-accounts">
+        <h3>الحسابات التجريبية</h3>
+        <button class="account-btn" onclick="fillLogin('admin', 'admin123')">
+          👨‍💼 مدير النظام
+        </button>
+        <button class="account-btn" onclick="fillLogin('teamlead', 'team123')">
+          👔 قائد الفريق
+        </button>
+        <button class="account-btn" onclick="fillLogin('employee', 'emp123')">
+          👨‍💻 موظف
+        </button>
+      </div>
+
+      <div class="back-link">
+        <a href="index.html">← العودة للصفحة الرئيسية</a>
+      </div>
+    </div>
+
+    <script>
+      function fillLogin(user, pass) {
+        document.getElementById("username").value = user;
+        document.getElementById("password").value = pass;
+      }
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // التحقق من الحسابات التجريبية
+          const validAccounts = {
+            admin: "admin123",
+            teamlead: "team123",
+            employee: "emp123",
+          };
+
+          if (validAccounts[username] === password) {
+            // Save user to localStorage
+            localStorage.setItem(
+              "currentUser",
+              JSON.stringify({ username: username, role: "user" })
+            );
+            // Redirect to dashboard
+            window.location.href = "dashboard.html";
+          } else {
+            alert("❌ خطأ في اسم المستخدم أو كلمة المرور");
+          }
+        });
+    </script>
+  </body>
+</html>
