@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إضافة تذكرة - Addit</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            direction: rtl;
+        }
+        .sidebar {
+            width: 220px;
+            background: rgba(102,126,234,0.9);
+            position: fixed;
+            top: 0; right: 0; bottom: 0;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 1;
+        }
+        .sidebar a {
+            color: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .sidebar a.active, .sidebar a:hover {
+            background: #764ba2;
+        }
+        .content {
+            margin-right: 250px;
+            padding: 2rem;
+        }
+        .form-container {
+            background: rgba(255,255,255,0.15);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            margin-top: 0;
+            font-size: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            direction: rtl;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        button {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="dashboard.html">لوحة التحكم</a>
+        <a href="tickets.html">التذاكر</a>
+        <a href="add-ticket.html" class="active">إضافة تذكرة</a>
+        <a href="teams.html">الفرق</a>
+        <a href="login.html">تسجيل الدخول</a>
+    </div>
+    <div class="content">
+        <div class="form-container">
+            <h1>إضافة تذكرة جديدة</h1>
+            <form id="ticketForm">
+                <div class="form-group">
+                    <label for="title">عنوان التذكرة *</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">الوصف *</label>
+                    <textarea id="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="status">الحالة *</label>
+                    <select id="status" required>
+                        <option value="open">مفتوحة</option>
+                        <option value="in-progress">قيد التنفيذ</option>
+                        <option value="closed">مغلقة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priority">الأولوية *</label>
+                    <select id="priority" required>
+                        <option value="high">عالية</option>
+                        <option value="medium">متوسطة</option>
+                        <option value="low">منخفضة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category">الفئة</label>
+                    <input type="text" id="category">
+                </div>
+                <div class="form-group">
+                    <label for="assignedTo">المسؤول</label>
+                    <input type="text" id="assignedTo">
+                </div>
+                <div class="btn-group">
+                    <button type="submit" class="btn-primary">حفظ التذكرة</button>
+                    <button type="button" class="btn-secondary" onclick="window.location.href='tickets.html'">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.getElementById('ticketForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const ticket = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                status: document.getElementById('status').value,
+                priority: document.getElementById('priority').value,
+                category: document.getElementById('category').value || '-',
+                assignedTo: document.getElementById('assignedTo').value || '-'
+            };
+            
+            window.AdditAPI.createTicket(ticket);
+            alert('تم إضافة التذكرة بنجاح!');
+            window.location.href = 'tickets.html';
+        });
+    </script>
+</body>
+</html>
